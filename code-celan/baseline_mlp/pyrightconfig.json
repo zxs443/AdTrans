@@ -1,0 +1,10 @@
+{
+  "include": ["."],
+  "extraPaths": ["../AdTrans"],
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": ["../AdTrans"]
+    }
+  ]
+}
