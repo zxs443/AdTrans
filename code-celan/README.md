@@ -5,38 +5,32 @@ This repository contains the code used to train and evaluate **AdTrans**, a dual
 Pre-computed descriptor CSV files are bundled under `AdTrans/descriptors/`, so model training can be reproduced without regenerating features from scratch. **Raw electrode records and element lookup tables are not included in this repository** due to size limits; download them from Zenodo (https://doi.org/10.5281/zenodo.21095579).
 
 ## Repository Structure
-proj/
-├── data_processing/              # Raw data → descriptor CSVs, CHGNet fine-tuning
-│   ├── source_data/              # Not bundled — download from Zenodo (see below)
-│   │   ├── split/                # train.csv, val.csv, test.csv
-│   │   ├── magpie.csv
-│   │   ├── mat2vec.csv
-│   │   └── skipatom.csv
-│   ├── descriptors_generator.py  # Element, property, and pretrained CHGNet descriptors
-│   ├── dataset_split.py          # Split utilities
-│   └── chgnet_finetune_dual/     # Voltage-aware CHGNet fine-tuning + export
-├── AdTrans/                      # Main Transformer model
-│   ├── main.py                   # Entry point: HPO, training, evaluation, XAI
-│   ├── descriptors/              # Descriptor CSVs consumed by the model
-│   ├── data/                     # Preprocessing and structure token placement
-│   ├── models/                   # Transformer architecture
-│   ├── training/                 # Trainer, evaluator, Optuna HPO, pruning pipeline
-│   ├── xai/                      # Integrated Gradients and feature ablation
-│   └── utils/                    # Configuration and plotting utilities
-└── baseline_mlp/                 # Flattened MLP baseline on the same descriptors
-    └── main.py
+---
+- `data_processing/` — Raw data to descriptor CSVs, CHGNet fine-tuning
+  - `source_data/` — Not bundled; download from Zenodo 
+  - `descriptors_generator.py` — Element, property, and pretrained CHGNet descriptors
+  - `dataset_split.py` — Split utilities
+  - `chgnet_finetune_dual/` — Voltage-aware CHGNet fine-tuning and export
+- `AdTrans/` — Main Transformer model
+  - `main.py` — Entry point: HPO, training, evaluation, XAI
+  - `descriptors/` — Descriptor CSVs consumed by the model
+  - `data/` — Preprocessing and structure token placement
+  - `models/` — Transformer architecture
+  - `training/` — Trainer, evaluator, Optuna HPO, pruning pipeline
+  - `xai/` — Integrated Gradients and feature ablation
+  - `utils/` — Configuration and plotting utilities
+- `baseline_mlp/` — Flattened MLP baseline on the same descriptors
+  - `main.py`
 ---
 
 ## Source Data
 After download from Zenodo, the layout should be:
-data_processing/source_data/
-├── split/
-│   ├── train.csv
-│   ├── val.csv
-│   └── test.csv
-├── magpie.csv
-├── mat2vec.csv
-└── skipatom.csv
+data_processing/source_data/split/train.csv
+data_processing/source_data/split/val.csv
+data_processing/source_data/split/test.csv
+data_processing/source_data/magpie.csv
+data_processing/source_data/mat2vec.csv
+data_processing/source_data/skipatom.csv
 
 ## Requirements
 At first, to run this project, your Python environment must meet the following minimum requirements: python=3.10.19, torch==2.6.0, numpy==1.26.4, pandas==2.2.3, scikit-learn==1.6.1, pymatgen==2025.4.17, optuna==4.2.1, matplotlib==3.10.1, seaborn==0.13.2, mendeleev==1.0.0, plotly==6.3.0, chgnet==0.4.2
