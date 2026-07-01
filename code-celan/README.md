@@ -37,13 +37,13 @@ data_processing/source_data/
 ├── magpie.csv
 ├── mat2vec.csv
 └── skipatom.csv
-## Dataset
 
-The default split contains **6,025** cathode records (train / val / test = 4,814 / 607 / 604):
 ## Requirements
 At first, to run this project, your Python environment must meet the following minimum requirements: python=3.10.19, torch==2.6.0, numpy==1.26.4, pandas==2.2.3, scikit-learn==1.6.1, pymatgen==2025.4.17, optuna==4.2.1, matplotlib==3.10.1, seaborn==0.13.2, mendeleev==1.0.0, plotly==6.3.0, chgnet==0.4.2
 
 ---
+### Follow these steps to reproduce the study findings
+
 ### 1. Generate element, property, and pretrained CHGNet descriptors
 ```bash
 cd data_processing
