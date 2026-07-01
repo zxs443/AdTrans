@@ -73,6 +73,7 @@ python main.py
 Set `PRUNING_STAGE_CONFIG['enabled'] = True` in `AdTrans/utils/pruning_config.py` to run the progressive decoder-token pruning pipeline instead of a single training run. Pruned results are saved under `AdTrans/results/pruning/`.
 
 ###---------------------------######
+
 The author drew on the following sources while developing this project. If you cite this work, please also consider citing the following studies:
 1. Tshitoyan, V. et al. Unsupervised word embeddings capture latent knowledge from materials science literature. Nature, 571, 95-98 (2019).
 2. Antunes, L. M., Grau-Crespo, R. & Butler, K. T. Distributed representations of atoms and materials for machine learning. npj Comput. Mater., 8, 44 (2022).
