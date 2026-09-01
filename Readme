@@ -1,11 +1,11 @@
-# AdTrans: Transformer-Based Cathode Voltage Prediction
-
+## AdTrans: Transformer-Based Cathode Voltage Prediction
 This repository contains the code used to train and evaluate **AdTrans**, a dual-stream Transformer model for predicting average discharge voltages of cathode materials. The pipeline covers descriptor generation, CHGNet fine-tuning, hyperparameter optimization (HPO), model training, explainable AI (XAI) analysis, and an MLP baseline.
-
 Pre-computed descriptor CSV files are bundled under `AdTrans/descriptors/`, so model training can be reproduced without regenerating features from scratch. **Raw electrode records and element lookup tables are not included in this repository** due to size limits; download them from Zenodo (https://doi.org/10.5281/zenodo.21095579).
+If you have any questions regarding the project code, feel free to contact the code contributor. 
+We hope constructive discussions can further improve this project.
+Email: 202421030323@std.uestc.edu.cn 
 
 ## Repository Structure
----
 - `data_processing/` — Raw data to descriptor CSVs, CHGNet fine-tuning
   - `source_data/` — Not bundled; download from Zenodo 
   - `descriptors_generator.py` — Element, property, and pretrained CHGNet descriptors
@@ -21,7 +21,8 @@ Pre-computed descriptor CSV files are bundled under `AdTrans/descriptors/`, so m
   - `utils/` — Configuration and plotting utilities
 - `baseline_mlp/` — Flattened MLP baseline on the same descriptors
   - `main.py`
----
+-`baseline_RF/` — Flattened RF baseline on the same descriptors
+  - `main.py`
 
 ## Source Data
 After download from Zenodo, the layout should be:
@@ -33,11 +34,10 @@ data_processing/source_data/mat2vec.csv
 data_processing/source_data/skipatom.csv
 
 ## Requirements
-At first, to run this project, your Python environment must meet the following minimum requirements: python=3.10.19, torch==2.6.0, numpy==1.26.4, pandas==2.2.3, scikit-learn==1.6.1, pymatgen==2025.4.17, optuna==4.2.1, matplotlib==3.10.1, seaborn==0.13.2, mendeleev==1.0.0, plotly==6.3.0, chgnet==0.4.2
+This project has been verified to work properly under the following Python environment configurations:
+python=3.10.19, torch==2.6.0, numpy==1.26.4, pandas==2.2.3, scikit-learn==1.6.1, pymatgen==2025.4.17, optuna==4.2.1, matplotlib==3.10.1, seaborn==0.13.2, mendeleev==1.0.0, plotly==6.3.0, chgnet==0.4.2
 
----
-### Follow these steps to reproduce the study findings
-
+## Follow these steps to reproduce the study findings:
 ### 1. Generate element, property, and pretrained CHGNet descriptors
 ```bash
 cd data_processing
@@ -46,8 +46,8 @@ python descriptors_generator.py
 ### 2. Fine-tune CHGNet on voltage labels
 ```bash
 cd data_processing
-python -m chgnet_finetune_dual.train_voltage_repr
-python -m chgnet_finetune_dual.export_descriptors
+python chgnet_finetune_dual.train_voltage_repr
+python chgnet_finetune_dual.export_descriptors
 ```
 ### 3. Copy descriptors into AdTrans
 
@@ -61,18 +61,22 @@ python main.py
 cd baseline_mlp
 python main.py
 ```
+### 6. Train RF Baseline
+```bash
+cd baseline_RF
+python main.py
+```
 
-### Token pruning (optional)
-
+## Token pruning (optional)
 Set `PRUNING_STAGE_CONFIG['enabled'] = True` in `AdTrans/utils/pruning_config.py` to run the progressive decoder-token pruning pipeline instead of a single training run. Pruned results are saved under `AdTrans/results/pruning/`.
 
-###---------------------------######
 
+######(≧∇≦)######
 The author drew on the following sources while developing this project. If you cite this work, please also consider citing the following studies:
 1. Tshitoyan, V. et al. Unsupervised word embeddings capture latent knowledge from materials science literature. Nature, 571, 95-98 (2019).
 2. Antunes, L. M., Grau-Crespo, R. & Butler, K. T. Distributed representations of atoms and materials for machine learning. npj Comput. Mater., 8, 44 (2022).
 3. Ward, L., Agrawal, A., Choudhary, A. & Wolverton, C. A general-purpose machine learning framework for predicting properties of inorganic materials. npj Comput. Mater., 2, 16028 (2016).
 4. B. Deng, P. Zhong, K. Jun, J. Riebesell, K. Han, C. J. Bartel, G. Ceder, Nat. Mach. Intell. 5 (2023) 1031-1041.
 5. Wang, A. Y.-T., Kauwe, S. K., Murdock, R. J. & Sparks, T. D. Compositionally restricted attention-based network for materials property predictions. npj Comput. Mater., 7, 77 (2021).
-6. Vaswani, A. et al. Attention is all you need. Nips'17, 6000–6010 (2017).
+6. Vaswani, A. et al. Attention is all you need. NeurIPS'17, 6000–6010 (2017).
 7. Ward, L. et al. Matminer: An open source toolkit for materials data mining. Comput. Mater. Sci., 152, 60-69 (2018).
